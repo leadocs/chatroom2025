@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { EvidenceItem } from "../data/content";
 import { cn } from "../lib/utils";
-import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle } from "lucide-react";
+import { TrendingUp, TrendingDown, AlertTriangle } from "lucide-react";
 import { MermaidChart } from "./MermaidChart";
 
 interface EvidenceBoardProps {
@@ -33,6 +33,7 @@ export function EvidenceBoard({ data, viewId }: EvidenceBoardProps) {
           {data.type === "image" && <ImageCard data={data} />}
           {data.type === "comparison" && <ComparisonCard data={data} />}
           {data.type === "mermaid" && <MermaidCard data={data} />}
+          {data.type === "iframe" && <IframeCard data={data} />}
         </motion.div>
       </AnimatePresence>
     </div>
@@ -48,6 +49,32 @@ function MermaidCard({ data }: { data: EvidenceItem }) {
       </div>
       <div className="flex-1 min-h-0 bg-wisteria-900/20 border border-wisteria-700/30 rounded-lg overflow-hidden backdrop-blur-md shadow-inner shadow-black/20">
         {data.chart_code && <MermaidChart chart={data.chart_code} />}
+      </div>
+    </div>
+  );
+}
+
+function IframeCard({ data }: { data: EvidenceItem }) {
+  return (
+    <div className="flex flex-col h-full max-h-full">
+      <div className="flex-none mb-4">
+        <h2 className="font-serif text-2xl text-wisteria-100 italic">{data.title}</h2>
+        {data.caption && <p className="font-mono text-xs text-wisteria-400 mt-1">{data.caption}</p>}
+      </div>
+      <div className="flex-1 min-h-0 bg-white border border-wisteria-700/30 rounded-lg overflow-hidden shadow-2xl relative">
+        <div className="absolute top-0 left-0 right-0 h-6 bg-slate-100 border-b border-slate-200 flex items-center px-2 gap-1.5 z-10">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+          <div className="flex-1 text-center text-[10px] font-mono text-slate-400">localhost:3000</div>
+        </div>
+        <iframe 
+          src={data.src} 
+          className="w-full h-full pt-6 bg-white" 
+          title={data.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export type Message = {
 };
 
 export type EvidenceItem = {
-  type: "stat_card" | "alert_card" | "chart" | "image" | "comparison" | "gallery" | "mermaid";
+  type: "stat_card" | "alert_card" | "chart" | "image" | "comparison" | "gallery" | "mermaid" | "iframe";
   title?: string;
   value?: string | number;
   trend?: string;
@@ -98,25 +98,37 @@ export const dialogue: Message[] = [
     id: "msg_08",
     speaker: "lea",
     content: "**AI 增强提效**。不是噱头，而是实战。比如这个『404 检查器』项目。",
-    trigger_view: "view_404_logic",
+    trigger_view: "view_ai_coding_demo",
   },
   {
     id: "msg_09",
-    speaker: "lea",
-    content: "设计师没有等待研发排期，而是直接梳理检测逻辑，用 Mermaid 绘制了完整的流程图。",
-    trigger_view: "view_404_logic",
+    speaker: "cyrus",
+    content: "听起来像个小工具。这能代表什么？",
+    trigger_view: "view_ai_coding_demo",
   },
   {
     id: "msg_10",
+    speaker: "lea",
+    content: "它代表了**流程的重构**。我只用自然语言描述需求，Cursor 就在 30 分钟内生成了整个应用。从前端 UI 到后端逻辑。",
+    trigger_view: "view_ai_coding_demo",
+  },
+  {
+    id: "msg_dashboard_intro",
+    speaker: "lea",
+    content: "不仅如此，我们还用 AI 重构了复杂的 Dashboard。这是我们最新的 **AI Dashboard V6**，完全由我（设计师）主导开发，集成了 React Three Fiber 3D 引擎。",
+    trigger_view: "view_ai_dashboard_demo",
+  },
+  {
+    id: "msg_dashboard_demo",
     speaker: "cyrus",
-    content: "流程清晰。但执行呢？",
-    trigger_view: "view_404_gui",
+    content: "设计师写 3D 引擎？这确实有点意思。让我看看实际运行效果。",
+    trigger_view: "view_ai_dashboard_demo",
   },
   {
     id: "msg_11",
-    speaker: "lea",
-    content: "他指导 AI 构建了这个 Python GUI 工具。完全绕过了研发资源瓶颈，实现了自主交付。",
-    trigger_view: "view_404_gui",
+    speaker: "cyrus",
+    content: "效率确实惊人。但设计师写代码，会不会产生新的技术负债？",
+    trigger_view: "view_ai_coding_demo",
   },
   {
     id: "msg_12",
@@ -354,6 +366,12 @@ export const evidenceBoard: Record<string, EvidenceItem> = {
     type: "image",
     src: "/assets/ai-conversation-1.png",
     caption: "与 AI Agent 的深度协作对话",
+  },
+  view_ai_dashboard_demo: {
+    type: "iframe",
+    title: "AI Dashboard V6 (Interactive Demo)",
+    src: "/chatroom2025/demos/ai-dashboard/index.html",
+    caption: "React Three Fiber 实时渲染的 3D 神经网络可视化组件",
   },
   view_adp_result: {
     type: "image",

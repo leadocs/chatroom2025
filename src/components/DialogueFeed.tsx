@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import type { Message, Consultant } from "../data/content";
-import { consultants } from "../data/content";
+import { consultants, type Message } from "../data/content";
 import { cn } from "../lib/utils";
 
 interface DialogueFeedProps {
