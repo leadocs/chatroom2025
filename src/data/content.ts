@@ -35,13 +35,13 @@ export const consultants: Record<"cyrus" | "lea", Consultant> = {
   cyrus: {
     name: "Cyrus",
     role: "年终判官",
-    avatar: "/avatars/marcus.jpg",
+    avatar: "/chatroom2025/avatars/avatar.svg",
     color: "text-wisteria-400", // Wisteria
   },
   lea: {
     name: "Lea",
     role: "UX 部门负责人",
-    avatar: "/avatars/sarah.jpg",
+    avatar: "/chatroom2025/avatars/avatar.svg",
     color: "text-lemon-400", // Lemon
   },
 };
@@ -263,17 +263,17 @@ export const evidenceBoard: Record<string, EvidenceItem> = {
   },
   view_404_logic: {
     type: "image",
-    src: "/assets/404-logic-flow.png",
+    src: "/chatroom2025/assets/404-logic-flow.png",
     caption: "设计师绘制的检测流程逻辑图 (Mermaid)",
   },
   view_404_gui: {
     type: "image",
-    src: "/assets/404-checker-main.png",
+    src: "/chatroom2025/assets/404-checker-main.png",
     caption: "AI 辅助构建的 Python GUI 工具界面",
   },
   view_404_results: {
     type: "image",
-    src: "/assets/404-checker-results.png",
+    src: "/chatroom2025/assets/404-checker-results.png",
     caption: "自动化检测结果：分钟级出具完整报告",
   },
   view_adp_workflow: {
@@ -359,12 +359,12 @@ export const evidenceBoard: Record<string, EvidenceItem> = {
   },
   view_project_template: {
     type: "image",
-    src: "/assets/Project_template.png",
+    src: "/chatroom2025/assets/Project_template.png",
     caption: "Multi-Agents 搭配 Template 和 Workflow 保证流程标准化",
   },
   view_ai_conversation: {
     type: "image",
-    src: "/assets/ai-conversation-1.png",
+    src: "/chatroom2025/assets/ai-conversation-1.png",
     caption: "与 AI Agent 的深度协作对话",
   },
   view_ai_dashboard_demo: {
@@ -375,7 +375,7 @@ export const evidenceBoard: Record<string, EvidenceItem> = {
   },
   view_adp_result: {
     type: "image",
-    src: "/assets/adp-result-2.png",
+    src: "/chatroom2025/assets/adp-result-2.png",
     caption: "SurferCloud 独立上线页面 (Designer as Full-Stack)",
   },
   view_roi_analysis: {

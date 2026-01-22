@@ -44,11 +44,13 @@ export function MermaidChart({ chart }: MermaidChartProps) {
         setError(null);
         // Generate a unique ID for each render to prevent conflicts
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+        console.log("Rendering Mermaid Chart:", id);
         const { svg } = await mermaid.render(id, chart);
+        console.log("Mermaid Render Success");
         setSvgContent(svg);
       } catch (err) {
         console.error("Mermaid rendering failed:", err);
-        setError("Failed to render chart. Check console for details.");
+        setError(`Failed to render chart: ${(err as Error).message}`);
       }
     };
 
