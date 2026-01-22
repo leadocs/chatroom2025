@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import mermaid from "mermaid";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
@@ -11,19 +11,19 @@ mermaid.initialize({
   themeVariables: {
     darkMode: true,
     background: "transparent",
-    primaryColor: "#2e1035", // wisteria-950
-    primaryTextColor: "#ffffff", // white
-    primaryBorderColor: "#ffffff", // white
-    lineColor: "#c69fd5", // wisteria-400
-    secondaryColor: "#4b2a53", // wisteria-900
-    tertiaryColor: "#2e1035", // wisteria-950
+    primaryColor: "#2e1035",
+    primaryTextColor: "#ffffff",
+    primaryBorderColor: "#ffffff",
+    lineColor: "#c69fd5",
+    secondaryColor: "#4b2a53",
+    tertiaryColor: "#2e1035",
     mainBkg: "transparent",
     nodeBorder: "#ffffff",
-    clusterBkg: "rgba(75, 42, 83, 0.3)", // wisteria-900 with opacity
-    clusterBorder: "#ae7ec0", // wisteria-500
-    defaultLinkColor: "#c69fd5", // wisteria-400
+    clusterBkg: "rgba(75, 42, 83, 0.3)",
+    clusterBorder: "#ae7ec0",
+    defaultLinkColor: "#c69fd5",
     titleColor: "#ffffff",
-    edgeLabelBackground: "#2e1035", // wisteria-950
+    edgeLabelBackground: "#2e1035",
     nodeTextColor: "#ffffff",
   },
 });
@@ -36,34 +36,51 @@ export function MermaidChart({ chart }: MermaidChartProps) {
   const [svgContent, setSvgContent] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    let isMounted = true;
     const renderChart = async () => {
       if (!chart) return;
       
       try {
         setError(null);
-        // Generate a unique ID for each render to prevent conflicts
+        // Using a more stable ID format
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
-        console.log("Rendering Mermaid Chart:", id);
+        
+        // Attempt to parse first to catch syntax errors early
+        try {
+          await mermaid.parse(chart);
+        } catch (parseError) {
+           console.error("Mermaid Parse Error:", parseError);
+           throw new Error(`Syntax Error: ${(parseError as Error).message}`);
+        }
+
         const { svg } = await mermaid.render(id, chart);
-        console.log("Mermaid Render Success");
-        setSvgContent(svg);
+        
+        if (isMounted) {
+          setSvgContent(svg);
+        }
       } catch (err) {
         console.error("Mermaid rendering failed:", err);
-        setError(`Failed to render chart: ${(err as Error).message}`);
+        if (isMounted) {
+          setError(`Failed to render chart: ${(err as Error).message}`);
+        }
       }
     };
 
     renderChart();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [chart]);
 
   if (error) {
     return (
-      <div className="w-full h-full flex items-center justify-center text-lemon-500 font-mono text-sm p-8 text-center">
-        <div className="space-y-2">
+      <div className="w-full h-full flex items-center justify-center text-lemon-500 font-mono text-sm p-8 text-center bg-slate-900/50">
+        <div className="space-y-2 overflow-hidden w-full">
           <p className="font-bold">MERMAID_RENDER_ERROR</p>
-          <p className="opacity-80">{error}</p>
-          <pre className="text-xs text-left bg-wisteria-950/50 p-4 rounded mt-4 overflow-auto max-w-full whitespace-pre-wrap">
+          <p className="opacity-80 truncate">{error}</p>
+          <pre className="text-xs text-left bg-wisteria-950/50 p-4 rounded mt-4 overflow-auto max-h-[200px] whitespace-pre-wrap">
             {chart}
           </pre>
         </div>
@@ -71,8 +88,16 @@ export function MermaidChart({ chart }: MermaidChartProps) {
     );
   }
 
+  if (!svgContent) {
+     return (
+        <div className="w-full h-full flex items-center justify-center text-wisteria-400 font-mono text-xs animate-pulse">
+            GENERATING_VISUALIZATION...
+        </div>
+     )
+  }
+
   return (
-    <div className="w-full h-full relative group">
+    <div className="w-full h-full relative group bg-slate-900/20">
       <TransformWrapper
         initialScale={1}
         minScale={0.5}

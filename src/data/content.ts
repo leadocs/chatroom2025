@@ -1,3 +1,11 @@
+// Importing assets
+import projectTemplate from "../assets/Project_template.png";
+import mermaidRender from "../assets/mermaid渲染.png";
+import checkGui from "../assets/截屏2026-01-22 12.41.18.png";
+import checkResults from "../assets/截屏2026-01-22 12.41.44.png";
+import aiConversation from "../assets/截屏2026-01-22 17.03.45.png";
+import adpResult from "../assets/截屏2026-01-22 17.06.43.png";
+
 export type Consultant = {
   name: string;
   role: string;
@@ -359,23 +367,23 @@ export const evidenceBoard: Record<string, EvidenceItem> = {
   },
   view_project_template: {
     type: "image",
-    src: "/chatroom2025/assets/Project_template.png",
+    src: projectTemplate,
     caption: "Multi-Agents 搭配 Template 和 Workflow 保证流程标准化",
   },
   view_ai_conversation: {
     type: "image",
-    src: "/chatroom2025/assets/ai-conversation-1.png",
+    src: aiConversation,
     caption: "与 AI Agent 的深度协作对话",
   },
   view_ai_dashboard_demo: {
     type: "iframe",
     title: "AI Dashboard V6 (Interactive Demo)",
-    src: "/chatroom2025/demos/ai-dashboard/index.html",
+    src: "demos/ai-dashboard/index.html",
     caption: "React Three Fiber 实时渲染的 3D 神经网络可视化组件",
   },
   view_adp_result: {
     type: "image",
-    src: "/chatroom2025/assets/adp-result-2.png",
+    src: adpResult,
     caption: "SurferCloud 独立上线页面 (Designer as Full-Stack)",
   },
   view_roi_analysis: {
