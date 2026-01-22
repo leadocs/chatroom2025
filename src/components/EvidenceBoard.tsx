@@ -160,8 +160,8 @@ function ChartCard({ data }: { data: EvidenceItem }) {
             <h2 className="font-serif text-2xl text-wisteria-200">{data.title}</h2>
             <div className="h-64 flex items-end gap-4 border-b border-wisteria-700/30 pb-4">
                 {data.data?.map((d, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                        <div className="w-full bg-wisteria-800/50 rounded-t-sm relative overflow-hidden group-hover:bg-wisteria-700/60 transition-colors" style={{ height: `${d.value}%` }}>
+                    <div key={i} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                        <div className="w-full bg-wisteria-800/50 rounded-t-sm relative overflow-hidden group-hover:bg-wisteria-700/60 transition-colors" style={{ height: `${(d.value / Math.max(...(data.data?.map(item => item.value) || [1]))) * 100}%` }}>
                             <div className="absolute bottom-0 left-0 w-full h-1 bg-lemon-400/50" />
                         </div>
                         <span className="text-xs font-mono text-wisteria-500">{d.label}</span>
