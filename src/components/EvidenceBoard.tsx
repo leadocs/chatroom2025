@@ -41,7 +41,7 @@ export function EvidenceBoard({ data, viewId }: EvidenceBoardProps) {
         </div>
       ) : (
         /* Standard View - For charts, stats, images */
-        <div className="w-full h-full max-w-5xl relative">
+        <div className="w-full h-full max-w-5xl relative flex items-center justify-center">
             <EvidenceContent data={data} viewId={viewId} />
         </div>
       )}
@@ -58,7 +58,7 @@ function EvidenceContent({ data, viewId }: { data: EvidenceItem, viewId: string 
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 1.05 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full h-full p-6 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/20"
+        className="w-full max-h-full p-6 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/20"
         >
         {data.type === "stat_card" && <StatCard data={data} />}
         {data.type === "alert_card" && <AlertCard data={data} />}
