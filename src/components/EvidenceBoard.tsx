@@ -13,29 +13,48 @@ export function EvidenceBoard({ data, viewId }: EvidenceBoardProps) {
   if (!data) return <div className="h-full w-full bg-slate-800 border-l border-slate-700 flex items-center justify-center text-slate-500 font-mono text-sm">WAITING_FOR_DATA_STREAM...</div>;
 
   return (
-    <div className="h-full w-full bg-transparent border-l border-wisteria-800/20 p-8 flex flex-col relative overflow-hidden backdrop-blur-sm">
+    <div className="h-full w-full bg-transparent border-l border-wisteria-800/20 flex items-center justify-center relative overflow-hidden backdrop-blur-sm p-8">
       <div className="absolute top-4 right-4 font-mono text-xs text-wisteria-500/50 z-10">
         EVIDENCE_ID: {viewId.toUpperCase()}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={viewId}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 flex flex-col justify-center h-full"
-        >
-          {data.type === "stat_card" && <StatCard data={data} />}
-          {data.type === "alert_card" && <AlertCard data={data} />}
-          {data.type === "chart" && <ChartCard data={data} />}
-          {data.type === "image" && <ImageCard data={data} />}
-          {data.type === "comparison" && <ComparisonCard data={data} />}
-          {data.type === "mermaid" && <MermaidCard data={data} />}
-          {data.type === "iframe" && <IframeCard data={data} />}
-        </motion.div>
-      </AnimatePresence>
+      {/* Mobile Device Frame */}
+      <div className="w-full max-w-[420px] aspect-[9/19] max-h-[90vh] bg-slate-950 rounded-[3rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col">
+        {/* Notch/Status Bar Area */}
+        <div className="h-8 w-full bg-slate-950 flex justify-between items-center px-6 shrink-0 z-20">
+            <div className="text-[10px] font-mono text-slate-500">9:41</div>
+            <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-slate-800"></div>
+                <div className="w-3 h-3 rounded-full bg-slate-800"></div>
+            </div>
+        </div>
+
+        <div className="flex-1 overflow-hidden relative bg-slate-900/50">
+            <AnimatePresence mode="wait">
+                <motion.div
+                key={viewId}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full h-full p-6 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/20"
+                >
+                {data.type === "stat_card" && <StatCard data={data} />}
+                {data.type === "alert_card" && <AlertCard data={data} />}
+                {data.type === "chart" && <ChartCard data={data} />}
+                {data.type === "image" && <ImageCard data={data} />}
+                {data.type === "comparison" && <ComparisonCard data={data} />}
+                {data.type === "mermaid" && <MermaidCard data={data} />}
+                {data.type === "iframe" && <IframeCard data={data} />}
+                </motion.div>
+            </AnimatePresence>
+        </div>
+
+        {/* Home Indicator */}
+        <div className="h-5 w-full bg-slate-950 flex justify-center items-center shrink-0 z-20">
+            <div className="w-1/3 h-1 bg-slate-800 rounded-full"></div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -58,19 +77,13 @@ function IframeCard({ data }: { data: EvidenceItem }) {
   return (
     <div className="flex flex-col h-full max-h-full">
       <div className="flex-none mb-4">
-        <h2 className="font-serif text-2xl text-wisteria-100 italic">{data.title}</h2>
-        {data.caption && <p className="font-mono text-xs text-wisteria-400 mt-1">{data.caption}</p>}
+        <h2 className="font-serif text-xl text-wisteria-100 italic">{data.title}</h2>
+        {data.caption && <p className="font-mono text-[10px] text-wisteria-400 mt-1">{data.caption}</p>}
       </div>
       <div className="flex-1 min-h-0 bg-white border border-wisteria-700/30 rounded-lg overflow-hidden shadow-2xl relative">
-        <div className="absolute top-0 left-0 right-0 h-6 bg-slate-100 border-b border-slate-200 flex items-center px-2 gap-1.5 z-10">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-          <div className="flex-1 text-center text-[10px] font-mono text-slate-400">localhost:3000</div>
-        </div>
         <iframe 
           src={data.src} 
-          className="w-full h-full pt-6 bg-white" 
+          className="w-full h-full bg-white" 
           title={data.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
