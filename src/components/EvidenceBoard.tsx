@@ -77,8 +77,8 @@ function IframeCard({ data }: { data: EvidenceItem }) {
   return (
     <div className="flex flex-col h-full max-h-full">
       <div className="flex-none mb-4">
-        <h2 className="font-serif text-xl text-wisteria-100 italic">{data.title}</h2>
-        {data.caption && <p className="font-mono text-[10px] text-wisteria-400 mt-1">{data.caption}</p>}
+        <h2 className="font-serif text-2xl text-wisteria-100 italic">{data.title}</h2>
+        {data.caption && <p className="font-mono text-xs text-wisteria-400 mt-1">{data.caption}</p>}
       </div>
       <div className="flex-1 min-h-0 bg-white border border-wisteria-700/30 rounded-lg overflow-hidden shadow-2xl relative">
         <iframe 
@@ -163,24 +163,14 @@ function ChartCard({ data }: { data: EvidenceItem }) {
 function ImageCard({ data }: { data: EvidenceItem }) {
     return (
         <div className="h-full flex flex-col">
-            <h2 className="font-serif text-2xl text-wisteria-200 mb-4 flex-none">{data.title}</h2>
-            <div className="flex-1 min-h-0 bg-slate-900/50 border border-wisteria-800/30 rounded-lg overflow-hidden relative group">
-               {/* Browser Window Chrome */}
-               <div className="h-6 bg-slate-900 border-b border-wisteria-800/30 flex items-center px-2 gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
-                  <div className="ml-2 px-2 py-0.5 bg-slate-800 rounded text-[9px] font-mono text-wisteria-500/50 w-full text-center">
-                    localhost:3000
-                  </div>
-               </div>
-               
-               {/* Scrollable Content */}
-               <div className="absolute top-6 left-0 right-0 bottom-0 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-wisteria-600/50">
+            <h2 className="font-serif text-xl text-wisteria-200 mb-4 flex-none">{data.title}</h2>
+            <div className="w-full aspect-[9/16] bg-slate-900/50 border border-wisteria-800/30 rounded-lg overflow-hidden relative group shadow-lg">
+               {/* Content */}
+               <div className="absolute inset-0 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/30">
                   <img src={data.src} alt={data.title} className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity" />
                </div>
             </div>
-            {data.caption && <p className="text-xs font-mono text-wisteria-500 mt-2 text-center flex-none">{data.caption}</p>}
+            {data.caption && <p className="text-[10px] font-mono text-wisteria-500 mt-3 text-center flex-none leading-relaxed">{data.caption}</p>}
         </div>
     )
 }

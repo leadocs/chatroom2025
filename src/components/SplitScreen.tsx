@@ -74,7 +74,7 @@ export function SplitScreen() {
       </div>
 
       {/* Right Panel: Evidence Board */}
-      <div className="w-[60%] bg-slate-900 relative">
+      <div className="w-[70%] bg-slate-900 relative">
           <div className="absolute inset-0 bg-[linear-gradient(rgba(198,159,213,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(198,159,213,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800/50 to-slate-900 pointer-events-none" />
           <EvidenceBoard 
