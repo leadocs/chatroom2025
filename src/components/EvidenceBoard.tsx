@@ -18,44 +18,57 @@ export function EvidenceBoard({ data, viewId }: EvidenceBoardProps) {
         EVIDENCE_ID: {viewId.toUpperCase()}
       </div>
 
-      {/* Mobile Device Frame */}
-      <div className="w-full max-w-[420px] aspect-[9/19] max-h-[90vh] bg-slate-950 rounded-[3rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col">
-        {/* Notch/Status Bar Area */}
-        <div className="h-8 w-full bg-slate-950 flex justify-between items-center px-6 shrink-0 z-20">
-            <div className="text-[10px] font-mono text-slate-500">9:41</div>
-            <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-slate-800"></div>
-                <div className="w-3 h-3 rounded-full bg-slate-800"></div>
-            </div>
-        </div>
+      {data.type === "iframe" ? (
+        /* Mobile Device Frame - Only for iframes */
+        <div className="w-full max-w-[420px] aspect-[9/19] max-h-[90vh] bg-slate-950 rounded-[3rem] border-8 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col">
+          {/* Notch/Status Bar Area */}
+          <div className="h-8 w-full bg-slate-950 flex justify-between items-center px-6 shrink-0 z-20">
+              <div className="text-[10px] font-mono text-slate-500">9:41</div>
+              <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-slate-800"></div>
+                  <div className="w-3 h-3 rounded-full bg-slate-800"></div>
+              </div>
+          </div>
 
-        <div className="flex-1 overflow-hidden relative bg-slate-900/50">
-            <AnimatePresence mode="wait">
-                <motion.div
-                key={viewId}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full h-full p-6 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/20"
-                >
-                {data.type === "stat_card" && <StatCard data={data} />}
-                {data.type === "alert_card" && <AlertCard data={data} />}
-                {data.type === "chart" && <ChartCard data={data} />}
-                {data.type === "image" && <ImageCard data={data} />}
-                {data.type === "comparison" && <ComparisonCard data={data} />}
-                {data.type === "mermaid" && <MermaidCard data={data} />}
-                {data.type === "iframe" && <IframeCard data={data} />}
-                </motion.div>
-            </AnimatePresence>
-        </div>
+          <div className="flex-1 overflow-hidden relative bg-slate-900/50">
+              <EvidenceContent data={data} viewId={viewId} />
+          </div>
 
-        {/* Home Indicator */}
-        <div className="h-5 w-full bg-slate-950 flex justify-center items-center shrink-0 z-20">
-            <div className="w-1/3 h-1 bg-slate-800 rounded-full"></div>
+          {/* Home Indicator */}
+          <div className="h-5 w-full bg-slate-950 flex justify-center items-center shrink-0 z-20">
+              <div className="w-1/3 h-1 bg-slate-800 rounded-full"></div>
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Standard View - For charts, stats, images */
+        <div className="w-full h-full max-w-5xl relative">
+            <EvidenceContent data={data} viewId={viewId} />
+        </div>
+      )}
     </div>
+  );
+}
+
+function EvidenceContent({ data, viewId }: { data: EvidenceItem, viewId: string }) {
+  return (
+    <AnimatePresence mode="wait">
+        <motion.div
+        key={viewId}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 1.05 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full h-full p-6 overflow-y-auto scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-wisteria-700/20"
+        >
+        {data.type === "stat_card" && <StatCard data={data} />}
+        {data.type === "alert_card" && <AlertCard data={data} />}
+        {data.type === "chart" && <ChartCard data={data} />}
+        {data.type === "image" && <ImageCard data={data} />}
+        {data.type === "comparison" && <ComparisonCard data={data} />}
+        {data.type === "mermaid" && <MermaidCard data={data} />}
+        {data.type === "iframe" && <IframeCard data={data} />}
+        </motion.div>
+    </AnimatePresence>
   );
 }
 
